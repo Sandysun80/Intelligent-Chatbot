@@ -1,0 +1,64 @@
+# 🚀 Multi-Source RAG Chatbot: n8n + Pinecone + AWS Bedrock
+
+Este repositorio contiene una solución profesional de **Generación Aumentada por Recuperación (RAG)** diseñada para ser totalmente agnóstica al contenido. 
+La arquitectura permite transformar cualquier repositorio de documentos estáticos (PDF, TXT, DOCX) en una base de conocimientos dinámica, interactiva y de alta precisión.
+
+## 🌟 La Idea
+A diferencia de los chatbots convencionales, este sistema separa el ciclo de vida del dato en dos flujos independientes y escalables, garantizando que la IA no "alucine" y 
+responda exclusivamente basándose en la información cargada.
+
+---
+
+## 📐 Arquitectura del Sistema
+
+### 1. Ingestión Automática (ETL)
+* **Carga:** Lectura de archivos desde fuentes locales o remotas.
+* **Procesamiento:** Fragmentación semántica (*Recursive Character Text Splitter*) para optimizar el contexto.
+* **Vectorización:** Generación de representaciones matemáticas (embeddings) con **Amazon Titan**.
+* **Almacenamiento:** Indexación en **Pinecone** para búsquedas vectoriales de baja latencia.
+
+### 2. Consulta Inteligente (Retrieval)
+* **Agente de IA:** Configurado como *Tools Agent* para decidir cuándo consultar la base de datos.
+* **Búsqueda Semántica:** Localización de los fragmentos más relevantes mediante similitud vectorial.
+* **Generación:** Respuesta contextualizada utilizando **Anthropic Claude 3** vía AWS Bedrock.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Componente | Tecnología |
+| :--- | :--- |
+| **Orquestador** | [n8n.io](https://n8n.io/) |
+| **Base de Datos Vectorial** | Pinecone |
+| **Modelos LLM (Chat)** | Anthropic Claude 3 (Haiku/Sonnet) |
+| **Embeddings** | Amazon Titan Text Embeddings |
+| **Cloud Provider** | AWS (Bedrock) |
+
+---
+
+## 🌍 Versatilidad (Solución Global)
+Aunque el despliegue inicial se validó con normativa hospitalaria, la solución es 100% adaptable a:
+* 📘 **Legal & Compliance:** Consulta de contratos y bases legales.
+* 🛠️ **Soporte Técnico:** Manuales de producto y documentación de software.
+* 🏦 **Finanzas:** Análisis de informes anuales y auditorías.
+* 🏢 **Corporate Knowledge:** Onboarding y gestión de conocimiento interno.
+
+---
+
+## ⚙️ Configuración Requerida
+
+Para replicar este proyecto, importa el archivo `.json` en tu instancia de n8n y configura las siguientes credenciales:
+
+1.  **AWS Credentials:** Acceso a Bedrock con permisos `invokeModel` (Región recomendada: `us-east-1`).
+2.  **Pinecone API:** API Key e ID de índice con dimensiones compatibles (1536 para Titan).
+3.  **Local Disk Access:** Permisos de lectura en el directorio donde se alojen los documentos.
+
+---
+
+## 🛡️ Seguridad y Control
+El flujo incluye un **System Message** optimizado que actúa como un "muro de seguridad", obligando a la IA a citar fuentes y a declarar 
+si no encuentra la información, evitando así la generación de datos falsos.
+
+---
+
+Desarrollado durante el Hackaton GEN AI Barcelona (febrero 2026) 
