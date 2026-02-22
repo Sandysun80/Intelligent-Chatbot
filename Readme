@@ -16,6 +16,7 @@ responda exclusivamente basándose en la información cargada.
 * **Procesamiento:** Fragmentación semántica (*Recursive Character Text Splitter*) para optimizar el contexto.
 * **Vectorización:** Generación de representaciones matemáticas (embeddings) con **Amazon Titan**.
 * **Almacenamiento:** Indexación en **Pinecone** para búsquedas vectoriales de baja latencia.
+![Workflow de n8n](img/workflow.png)
 
 ### 2. Consulta Inteligente (Retrieval)
 * **Agente de IA:** Configurado como *Tools Agent* para decidir cuándo consultar la base de datos.
