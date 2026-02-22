@@ -1,0 +1,397 @@
+{
+  "name": "My workflow copy",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "ed8c59dd-93d1-492e-8175-21280593a370",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        180,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "fileSelector": "C:/Users/bc_sa/Downloads/Documentation Hackaton2/*",
+        "options": {}
+      },
+      "id": "9a3fb205-daf8-4e3b-bdb7-2fe559d63a51",
+      "name": "Read/Write Files from Disk",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        440,
+        220
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "amazon.titan-embed-g1-text-02"
+      },
+      "id": "cdf87a69-4abd-4e42-b660-a920cbdfed06",
+      "name": "Embeddings AWS Bedrock",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsAwsBedrock",
+      "typeVersion": 1,
+      "position": [
+        660,
+        440
+      ],
+      "credentials": {
+        "aws": {
+          "id": "tUDhpwy6jOeW9a5W",
+          "name": "AWS account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "id": "224822d4-4e91-4394-950e-13108f6ea540",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        860,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "chunkOverlap": 100,
+        "options": {}
+      },
+      "id": "12b7a965-20b1-42b2-bf67-9e978b94b91a",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        860,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "model": "deepseek.v3.2",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "3d405daa-f972-41f3-941f-394fe6e33771",
+      "name": "AWS Bedrock Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        660
+      ],
+      "credentials": {
+        "aws": {
+          "id": "tUDhpwy6jOeW9a5W",
+          "name": "AWS account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 1
+      },
+      "id": "2bdc3de1-82c1-4be7-9a28-aec5918c5b7b",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        1520,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "model": "amazon.titan-embed-g1-text-02"
+      },
+      "id": "b8f05724-3728-4291-a5fd-bfdfa4481e67",
+      "name": "Embeddings AWS Bedrock1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsAwsBedrock",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        1000
+      ],
+      "credentials": {
+        "aws": {
+          "id": "tUDhpwy6jOeW9a5W",
+          "name": "AWS account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "documentos-hospital",
+          "mode": "list",
+          "cachedResultName": "documentos-hospital"
+        },
+        "options": {
+          "pineconeNamespace": ""
+        }
+      },
+      "id": "bcb47871-208a-4e32-9307-b7e927ffc2b7",
+      "name": "Pinecone Vector Store1",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        660
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "Sm82xm0ZeIewvGd6",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "documentoshospital",
+        "description": "Utiliza esta herramienta para responder consultas basadas exclusivamente en la normativa oficial, formación, certificados y estamentos del Hospital Clínic contenidos en los documentos cargados.\n",
+        "topK": 3
+      },
+      "id": "057b5701-3e8d-4da5-a0dd-1ab774cab702",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "model": "deepseek.v3.2",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "04d98c11-ac15-42e3-bc60-4236f0949232",
+      "name": "AWS Bedrock Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        540
+      ],
+      "credentials": {
+        "aws": {
+          "id": "tUDhpwy6jOeW9a5W",
+          "name": "AWS account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "45e68390-6f01-4210-99c6-876bfb1b05ed",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1180,
+        220
+      ],
+      "webhookId": "844cef6a-6f0f-49f0-a89a-70ac85231d5e"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "documentos-hospital",
+          "mode": "list",
+          "cachedResultName": "documentos-hospital"
+        },
+        "options": {}
+      },
+      "id": "37722a1f-967f-47c7-8131-c9ddfd557b55",
+      "name": "Pinecone Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        660,
+        220
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "Sm82xm0ZeIewvGd6",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres un asistente experto en recursos humanos, formación y normativas laborales del Hospital Clínic. Tu objetivo es responder a las consultas de los profesionales basándote estrictamente en la documentación oficial.\nEstilo de respuesta: Tus respuestas deben ser claras, directas y muy concisas. Ve siempre directo al grano, evita introducciones largas, preámbulos o texto de relleno. Utiliza viñetas (bullet points) si necesitas listar requisitos o pasos.\nEnrutamiento de fuentes: Para encontrar la respuesta correcta, debes analizar primero la intención de la consulta del usuario y buscar ÚNICAMENTE en la categoría documental correspondiente, según la siguiente guía de temas:\n1. CONVENIO COLECTIVO Y CONDICIONES LABORALES (Herramienta/Fuente: Convenio)\n• Cuándo usarla: Consultas sobre condiciones laborales generales del personal facultativo y delegados médicos.\n• Palabras clave: Salario base, precio de guardias, nocturnidad, excedencias, permisos (matrimonio, defunción, lactancia), vacaciones, jubilación, horarios, faltas, sanciones, sistema de promoción profesional (SPP).\n2. PERMISOS PARA ESTUDIOS OFICIALES: PIF Y F20 (Herramienta/Fuente: Permisos PIF/F20)\n• Cuándo usarla: Consultas sobre permisos de horas para cursar estudios reglados u oficiales dentro del horario laboral.\n• Palabras clave: Permiso Individual de Formación (PIF), 200 horas, grados universitarios, F20 (permiso de 20 horas), convocatorias PIF, renuncia a PIF.\n3. FORMACIÓN AVANZADA Y BAREMOS (Herramienta/Fuente: Formación Avanzada)\n• Cuándo usarla: Consultas relacionadas con la financiación o ayudas para estudios de postgrado y cómo puntúan los méritos en el currículum.\n• Palabras clave: Máster, Postgrado, ayudas económicas, pacto de permanencia, puntuación de currículum (baremo), aplicación \"El meu CV\", informe de idoneidad, comisiones.\n4. POLÍTICAS Y PLAN DE FORMACIÓN CONTINUA (Herramienta/Fuente: Plan de Formación)\n• Cuándo usarla: Consultas sobre el funcionamiento general de la formación interna del hospital, inscripciones y rol de los formadores.\n• Palabras clave: Libro blanco (Llibre Blanc), formación normativa, indispensable, recomendada u optativa, FUNDAE (formación bonificada), cursos online, formadores internos, compensación económica a docentes.\n5. PAGO DE CONGRESOS Y PUBLICACIONES (Herramienta/Fuente: Congresos y Publicaciones)\n• Cuándo usarla: Consultas sobre el circuito administrativo para cobrar/recuperar el dinero de inscripciones a congresos o publicaciones científicas.\n• Palabras clave: Reembolso, pago de inscripciones, congresos, publicacion científica, primer firmante, factura, abstract, póster, circuito de pago, tesorería."
+        }
+      },
+      "id": "000f1f72-aacc-42a5-be82-14ea1c2d1ef6",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1400,
+        220
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings AWS Bedrock": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings AWS Bedrock1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "28d0a27e-9b72-4288-96ed-ee118f1b7fce",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c8530638d76275431620a561cfeff534d0f6c57e431246a4c08443a935929153"
+  },
+  "id": "qaeN2DU1KHMs6iHu",
+  "tags": []
+}
